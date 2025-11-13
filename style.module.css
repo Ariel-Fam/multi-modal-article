@@ -1,0 +1,63 @@
+/* WeasyPrint-ready stylesheet */
+@page {
+  size: A4;
+  margin: 22mm 18mm 26mm 18mm;
+  @bottom-center { content: counter(page); font-size: 10pt; color: #4b5563; }
+  @top-center    { content: 'LLMs & Multimodal AI — Technical Report'; font-size: 10pt; color: #6b7280; }
+}
+
+:root { --line:#e5e7eb; --muted:#6b7280; --bg:#f8fafc; }
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.55;
+  color: #0f172a;
+}
+
+h1,h2,h3,h4,h5,h6 { line-height: 1.25; color: #0f172a; page-break-after: avoid; }
+h1 { font-size: 28pt; margin: 0 0 8mm; }
+h2 { font-size: 16pt; margin: 8mm 0 3mm; border-bottom: 1px solid var(--line); padding-bottom: 2mm; }
+h3 { font-size: 13pt; margin: 6mm 0 2mm; }
+
+section { margin: 0 0 6mm; }
+
+.cover {
+  display: grid; place-items: center; height: 85vh; text-align: center;
+  background: radial-gradient(900px 400px at 50% 10%, #eef2ff 0, transparent 65%);
+}
+.cover h1 { font-size: 40pt; letter-spacing: -0.5px; margin-bottom: 4mm; }
+.cover h2 { font-size: 18pt; color: var(--muted); border: none; }
+.cover .subtitle { margin-top: 2mm; color: var(--muted); }
+.cover .meta { margin-top: 16mm; color: #4b5563; font-size: 11pt; }
+.page-break { page-break-after: always; }
+
+.toc .toc-list { list-style: none; padding-left: 0; margin: 0; }
+.toc .toc-list li { display: block; margin: 3mm 0; border-bottom: 1px dotted var(--line); padding-bottom: 1mm; }
+.toc .toc-list a { text-decoration: none; color: #0f172a; }
+.toc .toc-list .toc-page::after { content: target-counter(attr(data-target url), page); float: right; color: #6b7280; }
+.toc .toc-note { color: #6b7280; font-size: 10pt; margin-top: 3mm; }
+
+.diagram {
+  margin: 5mm 0; padding: 4mm; background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px;
+}
+.diagram figcaption { font-size: 10pt; color: var(--muted); margin-bottom: 2mm; }
+
+svg { width: 100%; height: auto; }
+.box { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.2; }
+.box.light { fill: #eef2ff; stroke: #6366f1; }
+.frame { fill: none; stroke: #94a3b8; stroke-width: 1.2; stroke-dasharray: 4 3; }
+.arrow { stroke: #64748b; stroke-width: 1.6; }
+.label { fill: #0f172a; font-size: 12px; text-anchor: middle; dominant-baseline: middle; }
+.label.small { font-size: 11px; }
+
+ul.checklist { padding-left: 5mm; }
+ul.checklist li { margin: 2mm 0; }
+
+ul.bullets { padding-left: 5mm; }
+ul.bullets li { margin: 2mm 0; }
+
+.sources { padding-left: 5mm; }
+.sources li { margin: 1.5mm 0; }

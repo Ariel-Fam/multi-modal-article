@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Understanding LLMs & Multimodal AI: Generating Accurate Responses to
+      Prompts
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Cover -->
+    <section className="cover page-break">
+      <h1>Understanding LLMs &amp; Multimodal AI</h1>
+      <h2>Generating Accurate Responses to Prompts</h2>
+      <p className="subtitle">
+        A comprehensive technical report for developers
+      </p>
+      <div className="meta">
+        <div>Version: 1.0</div>
+      </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section className="toc page-break">
+      <h2>Table of Contents</h2>
+      <ol className="toc-list">
+        <li>
+          <a href="#intro">Introduction</a
+          ><span className="toc-page" data-target="#intro"></span>
+        </li>
+        <li>
+          <a href="#processing">Processing Text Prompts with Transformers</a
+          ><span className="toc-page" data-target="#processing"></span>
+        </li>
+        <li>
+          <a href="#attention">Multi‑Head Self‑Attention</a
+          ><span className="toc-page" data-target="#attention"></span>
+        </li>
+        <li>
+          <a href="#transformer">Transformer Architecture</a
+          ><span className="toc-page" data-target="#transformer"></span>
+        </li>
+        <li>
+          <a href="#example">Example — Attention in Action</a
+          ><span className="toc-page" data-target="#example"></span>
+        </li>
+        <li>
+          <a href="#training">Training LLMs: Pre‑Training, SFT &amp; RLHF</a
+          ><span className="toc-page" data-target="#training"></span>
+        </li>
+        <li>
+          <a href="#eval">Evaluation &amp; Iteration</a
+          ><span className="toc-page" data-target="#eval"></span>
+        </li>
+        <li>
+          <a href="#accuracy">How LLMs Achieve Accuracy &amp; Relevance</a
+          ><span className="toc-page" data-target="#accuracy"></span>
+        </li>
+        <li>
+          <a href="#multimodal">From Unimodal to Multimodal</a
+          ><span className="toc-page" data-target="#multimodal"></span>
+        </li>
+        <li>
+          <a href="#fusion">Multimodal Fusion Architectures</a
+          ><span className="toc-page" data-target="#fusion"></span>
+        </li>
+        <li>
+          <a href="#capabilities">Capabilities of Multimodal Systems</a
+          ><span className="toc-page" data-target="#capabilities"></span>
+        </li>
+        <li>
+          <a href="#examples">Generative AI Across Modalities</a
+          ><span className="toc-page" data-target="#examples"></span>
+        </li>
+        <li>
+          <a href="#conclusion">Conclusion</a
+          ><span className="toc-page" data-target="#conclusion"></span>
+        </li>
+        <li>
+          <a href="#sources">Sources</a
+          ><span className="toc-page" data-target="#sources"></span>
+        </li>
+      </ol>
+      <p className="toc-note">
+        Page numbers fill automatically in the PDF via
+        <code>target-counter()</code>.
+      </p>
+    </section>
+
+    <!-- Introduction -->
+    <section id="intro">
+      <h2>Introduction</h2>
+      <p>
+        Large Language Models (LLMs) and newer multimodal AI systems have
+        revolutionized how we interact with machines, producing remarkably
+        accurate and context‑aware responses from prompts. This report gives a
+        developer‑focused overview of: prompt processing (tokenization,
+        embeddings, attention, transformer architecture), training and
+        fine‑tuning (including RLHF and evaluation), mechanisms driving accuracy
+        and relevance, the evolution from text‑only to multimodal models, and
+        examples across text, images, audio/music, video, and code. Clear
+        explanations and diagrams are included.
+      </p>
+    </section>
+
+    <!-- Processing -->
+    <section id="processing">
+      <h2>
+        Processing Text Prompts with Transformers (Tokenization, Embeddings
+        &amp; Attention)
+      </h2>
+      <p>
+        When a user inputs a prompt, the model first performs
+        <strong>tokenization</strong>, breaking text into tokens (words or
+        subword units). Each token is mapped to a numeric
+        <strong>embedding</strong> vector from an embedding table; positional
+        information is added to preserve order. These vectors form the input to
+        stacked Transformer layers where self‑attention contextualizes each
+        token using information from the entire sequence.
+      </p>
+
+      <figure className="diagram">
+        <figcaption>
+          Figure 1 — Text → Tokens → Embeddings → Transformer
+        </figcaption>
+        <svg
+          viewBox="0 0 920 240"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Tokenization and embeddings flow"
+        >
+          <rect x="20" y="40" width="160" height="44" rx="8" className="box" />
+          <text x="100" y="67" className="label">Text Prompt</text>
+
+          <line x1="180" y1="62" x2="220" y2="62" className="arrow" />
+
+          <rect x="220" y="28" width="160" height="68" rx="8" className="box" />
+          <text x="300" y="58" className="label">Tokenizer</text>
+          <text x="300" y="78" className="label small">[t₁ t₂ … tₙ]</text>
+
+          <line x1="380" y1="62" x2="420" y2="62" className="arrow" />
+
+          <rect x="420" y="28" width="220" height="68" rx="8" className="box" />
+          <text x="530" y="58" className="label">Embedding + Position</text>
+          <text x="530" y="78" className="label small">E(tᵢ)+posᵢ</text>
+
+          <line x1="640" y1="62" x2="680" y2="62" className="arrow" />
+
+          <rect x="680" y="28" width="220" height="68" rx="8" className="box" />
+          <text x="790" y="58" className="label">Transformer Layers</text>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- Attention -->
+    <section id="attention">
+      <h2>Multi‑Head Self‑Attention</h2>
+      <p>
+        Self‑attention computes relevance between all token pairs using queries,
+        keys, and values, aggregating context with learned weights. Multiple
+        heads in parallel capture varied relations (syntax, semantics), enabling
+        robust long‑range reasoning and disambiguation.
+      </p>
+
+      <figure className="diagram">
+        <figcaption>Figure 2 — Multi‑Head Attention Schematic</figcaption>
+        <svg
+          viewBox="0 0 920 260"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Multi-head attention diagram"
+        >
+          <rect x="30" y="40" width="220" height="50" rx="8" className="box" />
+          <text x="140" y="70" className="label">Input Tokens</text>
+
+          <line x1="250" y1="65" x2="300" y2="65" className="arrow" />
+          <rect
+            x="300"
+            y="40"
+            width="120"
+            height="50"
+            rx="8"
+            className="box light"
+          />
+          <text x="360" y="67" className="label small">Q / K / V</text>
+
+          <line x1="420" y1="65" x2="470" y2="65" className="arrow" />
+          <rect x="470" y="30" width="190" height="70" rx="8" className="box" />
+          <text x="565" y="60" className="label">Scaled Dot‑Product</text>
+
+          <line x1="660" y1="65" x2="710" y2="65" className="arrow" />
+          <rect x="710" y="40" width="180" height="50" rx="8" className="box" />
+          <text x="800" y="67" className="label">Weighted Sum</text>
+
+          <text x="460" y="120" className="label small">× H heads</text>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- Transformer -->
+    <section id="transformer">
+      <h2>Transformer Architecture</h2>
+      <p>
+        The Transformer stacks blocks composed of multi‑head self‑attention and
+        position‑wise feed‑forward networks, wrapped with residual connections
+        and normalization for stability. Decoder‑only models (e.g., GPT) apply
+        masked attention to generate tokens autoregressively.
+      </p>
+
+      <figure className="diagram">
+        <figcaption>Figure 3 — Decoder‑Only Transformer Block</figcaption>
+        <svg
+          viewBox="0 0 920 280"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Transformer block diagram"
+        >
+          <rect
+            x="40"
+            y="40"
+            width="260"
+            height="220"
+            rx="10"
+            className="frame"
+          />
+          <text x="170" y="62" className="label">Block</text>
+
+          <rect x="60" y="80" width="220" height="40" rx="6" className="box" />
+          <text x="170" y="106" className="label">Masked M‑Head Attn</text>
+
+          <rect
+            x="60"
+            y="130"
+            width="220"
+            height="24"
+            rx="6"
+            className="box light"
+          />
+          <text x="170" y="148" className="label small">Add + LayerNorm</text>
+
+          <rect x="60" y="168" width="220" height="40" rx="6" className="box" />
+          <text x="170" y="194" className="label">Feed‑Forward</text>
+
+          <rect
+            x="60"
+            y="218"
+            width="220"
+            height="24"
+            rx="6"
+            className="box light"
+          />
+          <text x="170" y="236" className="label small">Add + LayerNorm</text>
+
+          <line x1="320" y1="150" x2="410" y2="150" className="arrow" />
+          <text x="365" y="140" className="label small">× L</text>
+          <rect
+            x="410"
+            y="118"
+            width="180"
+            height="64"
+            rx="8"
+            className="box"
+          />
+          <text x="500" y="148" className="label">Stacked Blocks</text>
+
+          <line x1="590" y1="150" x2="660" y2="150" className="arrow" />
+          <rect
+            x="660"
+            y="118"
+            width="220"
+            height="64"
+            rx="8"
+            className="box"
+          />
+          <text x="770" y="148" className="label">Softmax over Vocab</text>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- Example -->
+    <section id="example">
+      <h2>Example — Attention in Action</h2>
+      <p>
+        Given “The programmer put the book on the table because it was old,”
+        attention for “it” peaks at “the book,” resolving the pronoun, while
+        later evidence (“old”) contributes context. These learned patterns
+        enable accurate disambiguation.
+      </p>
+    </section>
+
+    <!-- Training -->
+    <section id="training">
+      <h2>Training LLMs: From Massive Datasets to Fine‑Tuning &amp; RLHF</h2>
+      <p>
+        <strong>Pre‑training.</strong> Models are trained with next‑token
+        prediction over vast corpora (e.g., web, books, Wikipedia), learning
+        grammar, facts, and reasoning patterns without explicit labels.
+      </p>
+      <p>
+        <strong>Supervised Fine‑Tuning (SFT).</strong> Curated prompt→response
+        pairs (often human‑written) teach instruction following, tone, and
+        dialogue patterns.
+      </p>
+      <p>
+        <strong>RLHF.</strong> Human preference rankings train a reward model;
+        policy optimization (e.g., PPO) steers responses toward helpfulness,
+        harmlessness, and honesty.
+      </p>
+
+      <figure className="diagram">
+        <figcaption>Figure 4 — RLHF Three‑Step Pipeline</figcaption>
+        <svg
+          viewBox="0 0 920 280"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="RLHF pipeline"
+        >
+          <rect x="20" y="40" width="260" height="60" rx="8" className="box" />
+          <text x="150" y="72" className="label">1) Human Rankings</text>
+
+          <line x1="280" y1="70" x2="340" y2="70" className="arrow" />
+          <rect x="340" y="40" width="260" height="60" rx="8" className="box" />
+          <text x="470" y="72" className="label">2) Reward Model</text>
+
+          <line x1="600" y1="70" x2="660" y2="70" className="arrow" />
+          <rect x="660" y="40" width="240" height="60" rx="8" className="box" />
+          <text x="780" y="72" className="label">3) Policy Opt (PPO)</text>
+
+          <line x1="780" y1="100" x2="780" y2="190" className="arrow" />
+          <rect
+            x="620"
+            y="190"
+            width="320"
+            height="50"
+            rx="8"
+            className="box light"
+          />
+          <text x="780" y="218" className="label small">
+            Aligned, Helpful Outputs
+          </text>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- Evaluation -->
+    <section id="eval">
+      <h2>Model Evaluation</h2>
+      <p>
+        Automated metrics (e.g., perplexity) assess language modeling quality,
+        while human evaluation, red‑teaming, and domain benchmarks probe
+        helpfulness, correctness, coherence, and safety. Feedback‑driven
+        iteration targets failure modes (e.g., hallucinations) with additional
+        tuning or data.
+      </p>
+    </section>
+
+    <!-- Accuracy -->
+    <section id="accuracy">
+      <h2>How LLMs Achieve Accuracy &amp; Relevance</h2>
+      <ul className="checklist">
+        <li>
+          <strong>Attention &amp; Long Context:</strong> Integrates distant
+          details across long prompts and multi‑turn chats.
+        </li>
+        <li>
+          <strong>Scale:</strong> Larger parameter counts and data improve
+          generalization and factual coverage.
+        </li>
+        <li>
+          <strong>Data Quality &amp; Diversity:</strong> Curated corpora reduce
+          gaps, bias, and drift.
+        </li>
+        <li>
+          <strong>SFT &amp; RLHF:</strong> Optimize for human‑preferred answers
+          and on‑topic behavior.
+        </li>
+        <li>
+          <strong>Continuous Evaluation:</strong> Iterative updates close
+          capability gaps.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Multimodal -->
+    <section id="multimodal">
+      <h2>
+        From Unimodal to Multimodal: Integrating Text, Images, Audio, and More
+      </h2>
+      <p>
+        Transformers generalize beyond text by tokenizing non‑text modalities:
+        image patches (ViT), audio frames/spectrograms, and video
+        spatio‑temporal tokens. The same attention machinery models
+        relationships across these token sequences.
+      </p>
+    </section>
+
+    <!-- Fusion Architectures -->
+    <section id="fusion">
+      <h2>Multimodal Fusion Architectures</h2>
+      <ul>
+        <li>
+          <strong>Separate Encoders &amp; Late Fusion (e.g., CLIP):</strong>
+          Modality‑specific encoders produce embeddings that are
+          aligned/combined.
+        </li>
+        <li>
+          <strong>Unified Multimodal Transformer:</strong> Serialized mixed
+          tokens (image patches + text) enable early fusion and cross‑modal
+          attention.
+        </li>
+        <li>
+          <strong>Cross‑Attention (Encoder→Decoder):</strong> One modality
+          conditions generation in another (e.g., image captioning,
+          text‑to‑image).
+        </li>
+      </ul>
+
+      <figure className="diagram">
+        <figcaption>Figure 5 — Fusion Patterns</figcaption>
+        <svg
+          viewBox="0 0 920 320"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Fusion patterns"
+        >
+          <rect x="20" y="30" width="240" height="60" rx="8" className="box" />
+          <text x="140" y="60" className="label">Image Encoder</text>
+          <rect x="20" y="110" width="240" height="60" rx="8" className="box" />
+          <text x="140" y="140" className="label">Text Encoder</text>
+          <line x1="260" y1="60" x2="320" y2="100" className="arrow" />
+          <line x1="260" y1="140" x2="320" y2="100" className="arrow" />
+          <rect x="320" y="85" width="220" height="40" rx="6" className="box" />
+          <text x="430" y="110" className="label small">
+            Late Fusion (CLIP)
+          </text>
+
+          <rect
+            x="580"
+            y="40"
+            width="300"
+            height="200"
+            rx="10"
+            className="frame"
+          />
+          <text x="730" y="64" className="label">Unified Transformer</text>
+          <text x="730" y="88" className="label small">
+            [Patches|Tokens|Frames]
+          </text>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- Capabilities -->
+    <section id="capabilities">
+      <h2>Capabilities of Multimodal Systems</h2>
+      <p>
+        Capabilities include image description, VQA, text→image generation, ASR
+        and TTS, grounding for robots, and cross‑modal transfer (e.g., describe
+        a diagram, answer a spoken question, and return a textual rationale).
+      </p>
+    </section>
+
+    <!-- Examples -->
+    <section id="examples">
+      <h2>Generative AI Across Modalities: Examples</h2>
+      <ul className="bullets">
+        <li>
+          <strong>Text→Image:</strong> DALL·E, Stable Diffusion, Imagen —
+          diffusion models refine noise toward images consistent with text
+          prompts.
+        </li>
+        <li>
+          <strong>Text→Music/Audio:</strong> Jukebox, MusicLM — hierarchical
+          generation of musical/audio tokens aligned to descriptions; TTS for
+          speech.
+        </li>
+        <li>
+          <strong>Text→Video:</strong> Make‑A‑Video, Imagen Video, Phenaki‑style
+          approaches — short clips with learned motion dynamics.
+        </li>
+        <li>
+          <strong>Code Generation:</strong> Codex, StarCoder — NL specs to
+          compilable/runnable code; translation across languages; IDE
+          assistance.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Conclusion -->
+    <section id="conclusion">
+      <h2>Conclusion</h2>
+      <p>
+        LLMs convert tokenized text into contextual representations via
+        attention and generate answers token‑by‑token. Scale, high‑quality data,
+        and alignment (SFT+RLHF) drive accuracy and relevance. Extending
+        Transformers across modalities enables unified systems that read, see,
+        listen, and generate across text, images, audio, video, and code.
+      </p>
+    </section>
+
+    <!-- Sources -->
+    <section id="sources">
+      <h2>Sources</h2>
+      <ul className="sources">
+        <li>Vaswani et al. (2017) — Attention Is All You Need.</li>
+        <li>
+          OpenAI model cards &amp; technical blogs — GPT‑3, Codex, DALL·E, CLIP.
+        </li>
+        <li>Google research — ViT, ViLT, MusicLM, Imagen/Video.</li>
+        <li>Industry write‑ups on RLHF, evaluation, and safety.</li>
+      </ul>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 215 20.2% 65.1%;
+  --radius: 0.75rem;
+  --shadow: 222.2 47.4% 11.2%;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --ring: 217.2 32.6% 17.5%;
+  --shadow: 210 40% 98%;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-yellow-500 text-foreground;
+}
+
+/* Prose-like defaults */
+.container {
+  @apply mx-auto max-w-5xl;
+}
+
+.cover {
+  display: grid; place-items: center; height: 85vh; text-align: center;
+  background: radial-gradient(900px 400px at 50% 10%, #eef2ff 0, transparent 65%);
+}
+.cover h1 { font-size: 40pt; letter-spacing: -0.5px; margin-bottom: 4mm; }
+.cover h2 { font-size: 18pt; color: var(--muted); border: none; }
+.cover .subtitle { margin-top: 2mm; color: var(--muted); }
+.cover .meta { margin-top: 16mm; color: #4b5563; font-size: 11pt; }
+.page-break { page-break-after: always; }
+
+.toc .toc-list { list-style: none; padding-left: 0; margin: 0; }
+.toc .toc-list li { display: block; margin: 3mm 0; border-bottom: 1px dotted var(--line); padding-bottom: 1mm; }
+.toc .toc-list a { text-decoration: none; color: #0f172a; }
+.toc .toc-list .toc-page::after { content: target-counter(attr(data-target url), page); float: right; color: #6b7280; }
+.toc .toc-note { color: #6b7280; font-size: 10pt; margin-top: 3mm; }
+
+.diagram {
+  margin: 5mm 0; padding: 4mm; background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px;
+}
+.diagram figcaption { font-size: 10pt; color: var(--muted); margin-bottom: 2mm; }
+
+svg { width: 100%; height: auto; }
+.box { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.2; padding: 10px; }
+.box.light { fill: #eef2ff; stroke: #6366f1; }
+.frame { fill: none; stroke: #94a3b8; stroke-width: 1.2; stroke-dasharray: 4 3; }
+.arrow { stroke: #64748b; stroke-width: 1.6; }
+.label { fill: #0f172a; font-size: 24px; text-anchor: middle; dominant-baseline: middle; }
+.label.small { font-size: 14px; }
+
+ul.checklist { padding-left: 5mm; }
+ul.checklist li { margin: 2mm 0; }
+
+ul.bullets { padding-left: 5mm; }
+ul.bullets li { margin: 2mm 0; }
+
+.sources { padding-left: 5mm; }
+.sources li { margin: 1.5mm 0; }
