@@ -79,9 +79,9 @@ export default function HomePage() {
         </CardContent>
       </Card>
 
-      <DirectionalReveal direction="left-to-right">
-        <Image src="/multi-head.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
-      </DirectionalReveal>
+    
+      <Image src="/multi-head.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
+   
 
       
 
@@ -96,9 +96,9 @@ export default function HomePage() {
         </CardContent>
       </Card>
 
-      <DirectionalReveal direction="right-to-left">
-        <Image src="/decoder_transformer.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
-      </DirectionalReveal>
+      
+      <Image src="/decoder_transformer.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
+     
 
      
 
@@ -124,9 +124,9 @@ export default function HomePage() {
         </CardContent>
       </Card>
 
-      <DirectionalReveal direction="left-to-right">
-        <Image src="/rlhf.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
-      </DirectionalReveal>
+
+      <Image src="/rlhf.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
+ 
 
      
 
@@ -168,9 +168,8 @@ export default function HomePage() {
         </CardContent>
       </Card>
 
-      <DirectionalReveal direction="right-to-left">
-        <Image src="/fusion_patterns.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
-      </DirectionalReveal>
+      <Image src="/fusion_patterns.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
+
 
       <Card className="bg-red-500">
         <CardHeader>
