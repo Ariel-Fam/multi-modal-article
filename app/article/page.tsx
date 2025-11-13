@@ -9,7 +9,7 @@ import Image from "next/image"
 export default function HomePage() {
   return (
     <main className="container px-6 py-10 space-y-10">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
 
         <DirectionalReveal direction="left-to-right">
 
@@ -21,11 +21,14 @@ export default function HomePage() {
             <Image src="/deep-research-cover.webp" alt="Hero Image" width={200} height={100} />
           </div>
         </DirectionalReveal>
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full sm:w-auto">
 
-          <DirectionalReveal direction="right-to-left">
+          <DirectionalReveal direction="right-to-left" className="w-full sm:w-auto">
 
-            <Button asChild className="p-10 bg-blue-500">
+            <Button
+              asChild
+              className="bg-blue-500 text-white w-full sm:w-auto inline-flex items-center gap-2 justify-center whitespace-nowrap px-4 py-2 sm:px-6 sm:py-3"
+            >
               <Link href="/"> <Newspaper className="w-4 h-4 fill-green-500" /> Go to main article</Link>
             </Button>
 
@@ -61,9 +64,9 @@ export default function HomePage() {
       </Card>
 
 
-      <DirectionalReveal direction="right-to-left">
-        <Image src="/processing_tokens.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
-      </DirectionalReveal>
+
+      <Image src="/processing_tokens.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
+   
 
 
      
