@@ -8,6 +8,7 @@ import { NotepadText } from "lucide-react"
 import DirectionalRevealImage from "@/components/DirectionalRevealImage"
 import DirectionalReveal from "@/components/DirectionalReveal"
 import Image from "next/image"
+import AudioTable from "@/components/AudioTable"
 
 
 export const metadata = {
@@ -178,7 +179,7 @@ export default async function ArticlePage() {
 
       <DirectionalRevealImage src="/hero.png"  />
 
- 
+
 
 
       <Card className="bg-green-500">
@@ -188,6 +189,21 @@ export default async function ArticlePage() {
         </CardContent>
       </Card>
 
+
+      <Separator />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Audio for all the sections in the article generated using a text to speech app that is still in development:</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Image src="/textSpeech.png" alt="Audio" width={1000} height={1000} />
+          <p className="text-muted-foreground">Audio for all the sections in the article can pe played and downloaded using the table below: {"[Table allows horizontal scrolling]"}</p>
+        </CardContent>
+      </Card>
+
+      
+      <AudioTable />
 
       
       {isEmpty ? (

@@ -66,7 +66,7 @@ export default function HomePage() {
 
 
       <Image src="/processing_tokens.png" className="rounded-lg" alt="Transformer Architecture" width={1000} height={1000} />
-   
+     
 
 
      
