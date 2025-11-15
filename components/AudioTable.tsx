@@ -26,7 +26,7 @@ const audioData = [
 export default function AudioTable() {
     return (
         <div className="w-full overflow-x-auto">
-            <Table className="w-full min-w-[640px]">
+            <Table className="w-full min-w-[640px] bg-green-500 p-4 rounded-lg">
                 <TableCaption className="sm:hidden">Scroll horizontally to see all columns.</TableCaption>
                 <TableHeader>
                     <TableRow>
