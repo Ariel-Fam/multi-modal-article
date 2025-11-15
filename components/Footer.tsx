@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
         </div>
         <nav className="flex items-center gap-4 text-sm">
-          <Link className="text-muted-foreground hover:text-foreground transition-colors" href="/">Home</Link>
+          <Link className="text-muted-foreground hover:text-foreground transition-colors" href="/">Main Article</Link>
           <span className="text-muted-foreground/40">•</span>
           <Link className="text-muted-foreground hover:text-foreground transition-colors" href="/article">Summary</Link>
         </nav>
