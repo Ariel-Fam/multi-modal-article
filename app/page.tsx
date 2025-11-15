@@ -198,7 +198,7 @@ export default async function ArticlePage() {
         </CardHeader>
         <CardContent>
           <Image src="/textSpeech.png" alt="Audio" width={1000} height={1000} />
-          <p className="text-muted-foreground">Audio for all the sections in the article can pe played and downloaded using the table below: {"[Table allows horizontal scrolling]"}</p>
+          <p className="text-muted-foreground">Audio for all the sections in the article can pe played and downloaded using the table below: {"[Table allows horizontal scrolling on mobile devices]"}</p>
         </CardContent>
       </Card>
 
