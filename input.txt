@@ -48,6 +48,8 @@
 - 
 - In summary, LLMs achieve accuracy through a combination of architecture (the ability to attend to relevant context), scale and data (learning vast amounts of information), and alignment training (directly optimizing for human-preferred, relevant, correct responses). The transition from a raw predictive model to a refined assistant involves making the model not just smart, but also tuned to what users consider a good and relevant answer.
 - 
+- Design Principles for Accurate, Useful Responses: Build with clear intent specification, grounded evidence use, explicit uncertainty handling, iterative human feedback loops, and robust safety constraints so outputs remain helpful, honest, and context-appropriate across modalities.
+- 
 - From Unimodal to Multimodal: Integrating Text, Images, Audio, and More
 - 
 - Early AI models and LLMs were unimodal, typically specializing in one type of data (modality) – e.g. text-only. A modality refers to a form of data like text, images (vision), audio (sound/speech/music), video (vision+time), or code. Humans experience the world in multiple modalities simultaneously, and next-generation AI systems are heading the same way. Multimodal models are those that can process and generate multiple types of data, allowing richer interactions (like describing an image, or answering questions about a video).

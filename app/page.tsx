@@ -42,6 +42,15 @@ function stripDashPrefix(line: string): string {
   return line
 }
 
+function splitLabeledSubheading(line: string): { heading: string; rest: string } | null {
+  const match = line.match(/^([A-Z][A-Za-z0-9&()\/\-–—.,' ]{2,90}):\s+(.+)$/)
+  if (!match) return null
+  const heading = match[1].trim()
+  const rest = match[2].trim()
+  if (/^Figure$/i.test(heading)) return null
+  return { heading, rest }
+}
+
 function parseArticle(raw: string): { title: string; sections: ArticleSection[] } {
   const lines = raw.split("\n")
   const cleaned = lines.map((l) => stripDashPrefix(l).trimEnd())
@@ -92,6 +101,14 @@ function parseArticle(raw: string): { title: string; sections: ArticleSection[] 
       continue
     }
 
+    // Heading followed by inline body text (e.g., "Sources: ...")
+    const knownHeadingWithBody = KNOWN_HEADINGS.find((h) => h.endsWith(":") && t.startsWith(`${h} `))
+    if (knownHeadingWithBody) {
+      ensureSection(knownHeadingWithBody)
+      paragraphBuffer.push(t.slice(knownHeadingWithBody.length).trim())
+      continue
+    }
+
     // Indented list item in source (original had "    - ")
     // We can recover this by checking the raw line's indent.
     const rawLine = lines[i]
@@ -103,6 +120,17 @@ function parseArticle(raw: string): { title: string; sections: ArticleSection[] 
         listBuffer = []
       }
       listBuffer.push(item)
+      continue
+    }
+
+    // Subheading followed by paragraph text (e.g., "Model Evaluation: ...")
+    const labeledSubheading = splitLabeledSubheading(t)
+    if (labeledSubheading) {
+      flushParagraph()
+      flushList()
+      if (!current) ensureSection(title)
+      ;(current as ArticleSection | null)?.blocks.push({ type: "heading", text: labeledSubheading.heading })
+      paragraphBuffer.push(labeledSubheading.rest)
       continue
     }
 
@@ -229,7 +257,7 @@ export default async function ArticlePage() {
                   return <p key={i} className="leading-7">{block.text}</p>
                 }
                 if (block.type === "heading") {
-                  return <h3 key={i} className="text-xl font-semibold">{(block as any).text}</h3>
+                  return <h3 key={i} className="text-xl font-semibold">{block.text}</h3>
                 }
                 if (block.type === "list") {
                   return (
